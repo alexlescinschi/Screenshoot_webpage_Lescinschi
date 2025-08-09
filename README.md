@@ -117,3 +117,8 @@ FLASK_APP=webapp:app flask run --port 5001
 
 Notă: GitHub Pages servește doar conținut static, deci nu poate rula direct serverul Flask. Pentru hosting permanent, folosește un PaaS (Render, Railway, Fly.io, Cloud Run, Azure App Service). Dacă dorești, pot adăuga fișiere de deploy pentru una din aceste platforme.
 
+### Deschide direct în GitHub Codespaces
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=alexlescinschi/screenshoter-site)
+
+După deschidere, rularea se face ca mai sus (activare venv și `python webapp.py`). Portul 5000 se va deschide automat în browserul Codespaces.
+
