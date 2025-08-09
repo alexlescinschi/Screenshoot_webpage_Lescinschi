@@ -4,7 +4,7 @@ Aplicație care face capturi full‑page din pagini web și le optimizează pent
 - interfață web (formular) cu previzualizare inline și link de descărcare
 - utilitar CLI flexibil cu opțiuni pentru format, dimensiuni, calitate și momentul capturii
 
-ÎNCERCAȚI DEMO https://screenshoter-site-dsvh.onrender.com/
+## ÎNCERCAȚI DEMO https://screenshoter-site-dsvh.onrender.com/
 
 ### Cerințe
 - Python 3.7+
