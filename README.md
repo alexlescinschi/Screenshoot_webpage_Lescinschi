@@ -96,5 +96,3 @@ FLASK_APP=webapp:app flask run --port 5001
 - `templates/index.html` – UI
 - `requirements.txt` – dependențe
 
-hai noorc
-  merge
