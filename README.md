@@ -103,7 +103,7 @@ FLASK_APP=webapp:app flask run --port 5001
 - `templates/index.html` – UI
 - `requirements.txt` – dependențe
 
-Notă: GitHub Pages servește doar conținut static, deci nu poate rula direct serverul Flask. Pentru hosting permanent, folosește un PaaS (Render, Railway, Fly.io, Cloud Run, Azure App Service). Dacă dorești, pot adăuga fișiere de deploy pentru una din aceste platforme.
+Notă: GitHub Pages servește doar conținut static, deci nu poate rula direct serverul Flask. Pentru hosting permanent, folosește un PaaS precum Render sau Google Cloud Run. Dacă dorești, pot adăuga fișiere de deploy dedicate.
 
 ### Deploy fără bătăi de cap (Render)
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
@@ -112,4 +112,30 @@ Notă: GitHub Pages servește doar conținut static, deci nu poate rula direct s
 - După deploy, accesezi URL‑ul public oferit de Render.
 
 Notă: planul Free poate hiberna după inactivitate; prima accesare după pauză poate dura câteva zeci de secunde.
+
+### Deploy pe Google Cloud Run
+Precondiții: `gcloud` instalat și autentificat, proiect selectat.
+```bash
+# autentificare și proiect
+gcloud auth login
+gcloud config set project PROJECT_ID
+
+# activează servicii
+gcloud services enable run.googleapis.com artifactregistry.googleapis.com cloudbuild.googleapis.com
+
+# (opțional) creează un repo Artifact Registry
+# gcloud artifacts repositories create app-repo \
+#   --repository-format=docker --location=europe-west3 --description="screenshoter images"
+
+# build & push imaginea direct cu Cloud Build
+gcloud builds submit --tag europe-west3-docker.pkg.dev/PROJECT_ID/app-repo/screenshoter:latest
+
+# deploy pe Cloud Run (public)
+gcloud run deploy screenshoter \
+  --image europe-west3-docker.pkg.dev/PROJECT_ID/app-repo/screenshoter:latest \
+  --platform managed --region europe-west3 --allow-unauthenticated \
+  --memory 1Gi --concurrency 1 --min-instances 0 --max-instances 1
+```
+- Alege regiunea apropiată (ex. `europe-west3`, `europe-west1`, `us-central1`).
+- `PORT` este furnizat automat de Cloud Run; aplicația îl folosește din mediul de execuție.
 
