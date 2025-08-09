@@ -103,26 +103,7 @@ FLASK_APP=webapp:app flask run --port 5001
 - `templates/index.html` – UI
 - `requirements.txt` – dependențe
 
-### Rulare pe GitHub Codespaces
-1. Fă push la repo pe GitHub.
-2. În pagina repo-ului, apasă „Code” → tab „Codespaces” → „Create codespace on main”.
-3. Așteaptă inițializarea. Configurația din `.devcontainer/devcontainer.json` va:
-   - crea venv și va instala dependențele
-   - instala Playwright cu dependențele de sistem și `chromium`
-   - forward‑ui portul `5000`
-4. Rulează aplicația din terminalul Codespaces:
-   ```bash
-   source .venv/bin/activate
-   python webapp.py
-   ```
-5. Codespaces va deschide automat previzualizarea pe portul 5000; poți seta vizibilitatea portului la Public dacă vrei link partajabil.
-
 Notă: GitHub Pages servește doar conținut static, deci nu poate rula direct serverul Flask. Pentru hosting permanent, folosește un PaaS (Render, Railway, Fly.io, Cloud Run, Azure App Service). Dacă dorești, pot adăuga fișiere de deploy pentru una din aceste platforme.
-
-### Deschide direct în GitHub Codespaces
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=alexlescinschi/screenshoter-site)
-
-După deschidere, rularea se face ca mai sus (activare venv și `python webapp.py`). Portul 5000 se va deschide automat în browserul Codespaces.
 
 ### Deploy fără bătăi de cap (Render)
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
