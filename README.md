@@ -10,20 +10,26 @@ Aplicație care face capturi full‑page din pagini web și le optimizează pent
 
 ### Instalare
 ```bash
-cd "/Users/a1707/Desktop/screenshoter site"
-python3 -m venv .venv
+cd /cale/către/proiect
+python -m venv .venv
+# macOS/Linux:
 source .venv/bin/activate
-pip install -r requirements.txt
+# Windows (PowerShell):
+.venv\Scripts\activate
+python -m pip install -r requirements.txt
 python -m playwright install chromium
 ```
 
 ### Rulare – Interfață web
 ```bash
-cd "/Users/a1707/Desktop/screenshoter site"
+cd /cale/către/proiect
+# macOS/Linux:
 source .venv/bin/activate
-# dacă portul 5000 e ocupat
+# Windows (PowerShell):
+.venv\Scripts\activate
+# dacă portul 5000 e ocupat (macOS/Linux)
 lsof -ti tcp:5000 | xargs -r kill -9
-"/Users/a1707/Desktop/screenshoter site/.venv/bin/python" webapp.py
+python webapp.py
 ```
 - Deschide în browser: `http://127.0.0.1:5000`
 - Completează URL-ul, apoi „Generează”. Imaginea apare sub formular (previzualizare + butoane „Descarcă”/„Deschide într-un tab nou”).
@@ -77,7 +83,10 @@ Parametri principali CLI:
 ### Depanare
 - „python: command not found” – rulează cu interpreterul din venv:
 ```bash
-"/Users/a1707/Desktop/screenshoter site/.venv/bin/python" webapp.py
+# macOS/Linux:
+./.venv/bin/python webapp.py
+# Windows:
+.venv\Scripts\python.exe webapp.py
 ```
 - „Address already in use” pe 5000 – eliberează portul sau pornește pe alt port:
 ```bash
@@ -85,10 +94,6 @@ lsof -ti tcp:5000 | xargs -r kill -9
 # sau:
 FLASK_APP=webapp:app flask run --port 5001
 ```
-- „Eroare la generare (subprocess)” în UI – pagina afișează ultimele linii din stdout/stderr de la subproces. Încearcă:
-  - mărește `Timeout încărcare (ms)`
-  - mărește `Wait după autoscroll (ms)`
-  - schimbă „Moment captură” la `load` sau `domcontentloaded`
 
 ### Structura proiectului
 - `screenshot.py` – captură full‑page cu Playwright și optimizare cu Pillow (CLI)
