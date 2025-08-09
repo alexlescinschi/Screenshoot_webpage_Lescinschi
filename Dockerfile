@@ -13,13 +13,12 @@ RUN python -m pip install --upgrade pip \
 # Copy app code
 COPY . .
 
-# Expose port
+# Expose port (Render sets PORT env; this is just documentation)
 EXPOSE 10000
 
 # Environment for Flask/Gunicorn
-ENV PORT=10000
 ENV PYTHONUNBUFFERED=1
 
 # Start with gunicorn
-# Bind 0.0.0.0 and use webapp:app (Flask app object)
-CMD ["gunicorn", "-b", "0.0.0.0:10000", "webapp:app"] 
+# Bind 0.0.0.0 and use webapp:app (Flask app object); use PORT from env with fallback
+CMD ["sh", "-c", "gunicorn -b 0.0.0.0:${PORT:-10000} webapp:app"] 
