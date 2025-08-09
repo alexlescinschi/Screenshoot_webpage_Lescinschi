@@ -96,11 +96,4 @@ FLASK_APP=webapp:app flask run --port 5001
 - `templates/index.html` – UI
 - `requirements.txt` – dependențe
 
-### Publicare pe GitHub
-```bash
-git init -b main
-git add .
-git commit -m "Initial commit: web screenshot app (Flask + Playwright)"
-git remote add origin https://github.com/USERNAME/REPO.git
-git push -u origin main
-``` 
+lolo
