@@ -95,5 +95,3 @@ FLASK_APP=webapp:app flask run --port 5001
 - `webapp.py` – server Flask (formular + previzualizare)
 - `templates/index.html` – UI
 - `requirements.txt` – dependențe
-
-lolo
