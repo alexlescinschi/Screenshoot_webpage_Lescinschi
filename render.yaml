@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: screenshoter-site
+    env: docker
+    plan: free
+    region: frankfurt
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: "1" 

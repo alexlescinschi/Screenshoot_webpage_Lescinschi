@@ -122,3 +122,11 @@ Notă: GitHub Pages servește doar conținut static, deci nu poate rula direct s
 
 După deschidere, rularea se face ca mai sus (activare venv și `python webapp.py`). Portul 5000 se va deschide automat în browserul Codespaces.
 
+### Deploy fără bătăi de cap (Render)
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
+
+- Blueprint `render.yaml` + `Dockerfile` sunt incluse. Apasă butonul, conectează repo‑ul GitHub și Render va construi imaginea (include Playwright/Chromium) și va porni serviciul web.
+- După deploy, accesezi URL‑ul public oferit de Render.
+
+Notă: planul Free poate hiberna după inactivitate; prima accesare după pauză poate dura câteva zeci de secunde.
+
