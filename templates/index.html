@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Full-page Screenshot</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif; margin: 40px; color: #222; }
+    .container { max-width: 920px; margin: 0 auto; }
+    h1 { font-size: 22px; margin-bottom: 16px; }
+    form { background: #fff; border: 1px solid #ddd; border-radius: 10px; padding: 20px; }
+    label { display: block; font-weight: 600; margin-top: 12px; }
+    input[type="text"], input[type="number"], select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; }
+    button { margin-top: 18px; background: #0a7cff; color: #fff; border: none; padding: 10px 14px; border-radius: 8px; cursor: pointer; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .muted { color: #666; font-size: 13px; }
+    .error { background: #ffe5e5; color: #b00000; padding: 10px; border-radius: 8px; margin-bottom: 16px; }
+    details { margin-top: 12px; }
+    .preview { margin-top: 24px; }
+    .preview img { max-width: 100%; border-radius: 10px; border: 1px solid #ddd; }
+    .meta { color: #555; font-size: 13px; margin-top: 6px; }
+    .actions { margin-top: 10px; }
+    .actions a { margin-right: 10px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Descarcă sau vezi screenshot full-page</h1>
+
+    {% if error %}
+      <div class="error">{{ error }}</div>
+    {% endif %}
+
+    <form method="post" action="/shot">
+      <label for="url">Adresa site-ului</label>
+      <input id="url" name="url" type="text" placeholder="ex: https://example.com" value="{{ request.form.url or '' }}" required />
+      <div class="muted">Dacă nu pui protocol, vom folosi automat https://</div>
+
+      <details open>
+        <summary>Opțiuni avansate</summary>
+        <div class="row">
+          <div>
+            <label for="format">Format</label>
+            <select id="format" name="format">
+              <option value="webp" {% if (request.form.format or 'webp') == 'webp' %}selected{% endif %}>WEBP (mic, recomandat)</option>
+              <option value="jpeg" {% if request.form.format == 'jpeg' %}selected{% endif %}>JPEG</option>
+              <option value="png" {% if request.form.format == 'png' %}selected{% endif %}>PNG (fără pierderi, fișier mai mare)</option>
+            </select>
+          </div>
+          <div>
+            <label for="output_width">Lățime finală (px)</label>
+            <input id="output_width" name="output_width" type="number" min="200" max="4000" value="{{ request.form.output_width or 800 }}" />
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label for="output_height">Înălțime maximă (px)</label>
+            <input id="output_height" name="output_height" type="number" min="200" max="8000" value="{{ request.form.output_height or '' }}" />
+            <div class="muted">Dacă imaginea e mai înaltă, va fi tăiată de sus până la această înălțime (fără deformare).</div>
+          </div>
+          <div>
+            <label for="quality">Calitate (webp/jpeg)</label>
+            <input id="quality" name="quality" type="number" min="1" max="100" value="{{ request.form.quality or 70 }}" />
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label for="capture_width">Lățime captură (viewport)</label>
+            <input id="capture_width" name="capture_width" type="number" min="360" max="1920" value="{{ request.form.capture_width or 1280 }}" />
+          </div>
+          <div>
+            <label for="wait_until">Moment captură</label>
+            <select id="wait_until" name="wait_until">
+              {% set wu = (request.form.wait_until or 'load') %}
+              <option value="domcontentloaded" {% if wu == 'domcontentloaded' %}selected{% endif %}>Rapid (DOM încărcat)</option>
+              <option value="load" {% if wu == 'load' %}selected{% endif %}>Complet (load) — recomandat</option>
+              <option value="networkidle" {% if wu == 'networkidle' %}selected{% endif %}>Rețea liniștită (poate bloca pe unele site-uri)</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label for="wait_ms">Wait după autoscroll (ms)</label>
+            <input id="wait_ms" name="wait_ms" type="number" min="0" max="5000" value="{{ request.form.wait_ms or 800 }}" />
+          </div>
+          <div>
+            <label for="timeout_ms">Timeout încărcare (ms)</label>
+            <input id="timeout_ms" name="timeout_ms" type="number" min="1000" max="120000" value="{{ request.form.timeout_ms or 60000 }}" />
+          </div>
+        </div>
+      </details>
+
+      <button type="submit">Generează</button>
+    </form>
+
+    {% if preview_data_uri %}
+      <div class="preview">
+        <div class="meta">Fișier: {{ filename }} — ~{{ size_kb }} KB</div>
+        <div class="actions">
+          <a href="{{ preview_data_uri }}" download="{{ filename }}">Descarcă</a>
+          <a href="{{ preview_data_uri }}" target="_blank" rel="noopener">Deschide într-un tab nou</a>
+        </div>
+        <img src="{{ preview_data_uri }}" alt="Screenshot" />
+      </div>
+    {% endif %}
+
+    <p class="muted" style="margin-top:16px">Notă: aplicația va derula automat pagina pentru a încărca conținutul lazy și va ascunde scrollbars.</p>
+  </div>
+</body>
+</html> 
