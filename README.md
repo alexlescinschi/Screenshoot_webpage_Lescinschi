@@ -1,8 +1,10 @@
-## Full‑page Screenshot pentru Web (Flask + Playwright)
+## Full‑page Screenshot pentru orice pagină Web (Flask + Playwright)
 
 Aplicație care face capturi full‑page din pagini web și le optimizează pentru publicare (redimensionare, compresie). Oferă:
 - interfață web (formular) cu previzualizare inline și link de descărcare
 - utilitar CLI flexibil cu opțiuni pentru format, dimensiuni, calitate și momentul capturii
+
+ÎNCERCAȚI DEMO https://screenshoter-site-dsvh.onrender.com/
 
 ### Cerințe
 - Python 3.7+
